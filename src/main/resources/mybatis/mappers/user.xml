@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+<insert id="joinUser" parameterType="com.javaex.vo.UserVo">
+<![CDATA[
+insert into users(userno,
+                  id,
+                  username,
+                  password,
+                  joindate)
+          values (seq_users_no.nextval,
+                  #{id},
+                  #{userName},
+                  #{password},
+                  sysdate)
+]]>
+</insert>   
+<insert id="makeBlog" parameterType="com.javaex.vo.UserVo">
+<![CDATA[
+insert into blog (id,
+                  blogtitle,
+                  logofile)
+          values (#{id},
+                  concat(#{userName},'의 블로그입니다'),
+                  'spring-logo.jpg')
+]]>
+</insert>   
+<select id="loginUser" resultType="com.javaex.vo.UserVo">
+<![CDATA[
+select userno,
+       id,
+       username,
+       password,
+       joindate 
+from users
+where id=#{id}
+and password=#{password}
+]]>
+</select>
+<select id="idCheck" parameterType="com.javaex.vo.UserVo" resultType="int">
+<![CDATA[
+select count(id) from users
+where id=#{id}
+]]>
+</select>
+<select id="getUser" resultType="com.javaex.vo.UserVo">
+<![CDATA[
+select userno,
+       id,
+       username,
+       password,
+       joindate
+from users
+where id=#{id}
+]]>
+</select>
+</mapper>

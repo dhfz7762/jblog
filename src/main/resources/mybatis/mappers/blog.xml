@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+<select id="getBlog" resultType="com.javaex.vo.BlogVo">
+<![CDATA[
+select a.id,
+       a.blogtitle,
+       a.logofile,
+       b.username
+from blog a join users b
+on a.id = b.id
+where a.id=#{id}
+]]>
+</select>
+<update id="blog.updateAdminBasic" parameterType="com.javaex.vo.BlogVo">
+<![CDATA[
+update blog
+set blogtitle = #{blogTitle},
+    logofile = #{logoFile}
+where id=#{id}
+]]>
+</update>
+<update id="blog.updateAdminBasicNotFile" parameterType="com.javaex.vo.BlogVo">
+<![CDATA[
+update blog
+set blogtitle = #{blogTitle}
+where id=#{id}
+]]>
+</update>
+</mapper>
