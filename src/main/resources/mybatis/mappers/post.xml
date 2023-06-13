@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+<insert id="insertPost" parameterType="com.javaex.vo.PostVo">
+<![CDATA[
+insert into post(postNo,
+                 cateNo,
+                 postTitle,
+                 postContent,
+                 regDate)
+         values (seq_post_no.nextval,
+                 #{cateNo},
+                 #{postTitle},
+                 #{postContent},
+                 sysdate)
+]]>
+</insert>
+<select id="getLastPost" resultType="com.javaex.vo.PostVo">
+<![CDATA[
+select rownum,
+       a.postNo,
+       a.cateNo,
+       a.postTitle,
+       a.postContent,
+       a.regDate,
+       b.userName
+from post a join 
+(select c.cateNo,d.userName
+from category c join users d
+on c.id = d.id) b
+on a.cateNo = b.cateNo
+where rownum = 1
+order by a.cateNo desc
+]]>
+</select>
+<select id="getPostList" resultType="com.javaex.vo.PostVo">
+<![CDATA[
+select rownum,postTitle,regDate
+from post
+where cateNo=#{cateNo}
+]]>
+</select>
+</mapper>

@@ -5,6 +5,7 @@
 	<settings>
 		<setting name="cacheEnabled" value="false" />
 		<setting name="jdbcTypeForNull" value="NULL" />
+		<setting name="callSettersOnNulls" value="true" />
 	</settings>
 	<typeAliases>
 	</typeAliases>
@@ -12,5 +13,7 @@
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/blog.xml" />
+		<mapper resource="mybatis/mappers/cate.xml" />
+		<mapper resource="mybatis/mappers/post.xml" />
 	</mappers>
 </configuration>

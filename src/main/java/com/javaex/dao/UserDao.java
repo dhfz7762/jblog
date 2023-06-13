@@ -27,5 +27,8 @@ public class UserDao {
 	public int makeBlog(UserVo userVo) {
 		return sqlSession.insert("user.makeBlog", userVo);
 	}
+	public int makeCate(UserVo userVo) {
+		return sqlSession.insert("user.makeCate",userVo);
+	}
 
 }

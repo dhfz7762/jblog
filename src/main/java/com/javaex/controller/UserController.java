@@ -45,13 +45,9 @@ public class UserController {
 	public String join(@ModelAttribute UserVo userVo) {
 		int count = userService.joinUser(userVo);
 		int count2 = userService.makeBlog(userVo);
-		if(count>0) {
-			if(count2>0) {
+		int count3 = userService.makeCate(userVo);
+		if(count+count2+count3==3) {
 			return "user/joinSuccess";
-			}
-			else {
-				return "user/joinForm";
-			}
 		}
 		else {
 			return "user/joinForm";
@@ -69,7 +65,7 @@ public class UserController {
 		session.removeAttribute("authUser"); //session 메모리 삭제
 		session.invalidate(); 
 		
-		return "redirect:/main/index";
+		return "redirect:/";
 	}
 
 }

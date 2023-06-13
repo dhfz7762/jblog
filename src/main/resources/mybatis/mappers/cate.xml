@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cate">
+<insert id="insertCate" parameterType="com.javaex.vo.CateVo">
+<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">	
+		select seq_category_no.nextval from dual
+	</selectKey>
+<![CDATA[
+insert into category 
+              values (#{cateNo},
+                      #{id},
+                      #{cateName},
+                      #{description},
+                      sysdate)
+]]>
+</insert>  
+<select id="getCateList" resultType="com.javaex.vo.CateVo">
+<![CDATA[
+select cateNo,
+       id,
+       cateName,
+       description,
+       regDate
+from category
+where id = #{id}
+order by cateNo desc
+]]>
+</select>
+<select id="getCate" resultType="com.javaex.vo.CateVo">
+<![CDATA[
+select cateNo,
+       id,
+       cateName,
+       description,
+       regDate
+from category
+where cateNo = #{cateNo}
+]]>
+</select>
+<select id="getLastCate" resultType="com.javaex.vo.CateVo">
+<![CDATA[
+select rownum,cateNo
+from 
+(select * 
+from category 
+order by cateNo desc)
+where id = #{id}
+and rownum=1
+
+]]>
+</select>
+</mapper>

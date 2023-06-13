@@ -26,6 +26,20 @@ insert into blog (id,
                   'spring-logo.jpg')
 ]]>
 </insert>   
+<insert id="makeCate" parameterType="com.javaex.vo.UserVo">
+<![CDATA[
+insert into category (cateNo,
+                      id,
+                      cateName,
+                      description,
+                      regDate)
+              values (seq_category_no.nextval,
+                      #{id},
+                      '미분류',
+                      '기본으로 만들어지는 카테고리 입니다.',
+                      sysdate)
+]]>
+</insert>  
 <select id="loginUser" resultType="com.javaex.vo.UserVo">
 <![CDATA[
 select userno,

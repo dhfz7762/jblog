@@ -27,5 +27,8 @@ public class UserService {
 	public int makeBlog(UserVo userVo) {
 		return userDao.makeBlog(userVo);
 	}
+	public int makeCate(UserVo userVo) {
+		return userDao.makeCate(userVo);
+	}
 
 }
