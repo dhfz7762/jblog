@@ -18,8 +18,35 @@ insert into post(postNo,
 </insert>
 <select id="getLastPost" resultType="com.javaex.vo.PostVo">
 <![CDATA[
-select rownum,
+select * from
+(select rownum,
        a.postNo,
+       a.cateNo,
+       a.postTitle,
+       a.postContent,
+       a.regDate,
+       b.userName
+from post a join 
+(select c.cateNo,d.userName
+from category c join users d
+on c.id = d.id
+where d.id =#{id}) b
+on a.cateNo = b.cateNo
+order by a.postNo desc)
+where rownum = 1
+
+]]>
+</select>
+<select id="getPostList" resultType="com.javaex.vo.PostVo">
+<![CDATA[
+select rownum,postNo,postTitle,regDate
+from post
+where cateNo=#{cateNo}
+]]>
+</select>
+<select id="clickPost" resultType="com.javaex.vo.PostVo">
+<![CDATA[
+select a.postNo,
        a.cateNo,
        a.postTitle,
        a.postContent,
@@ -30,15 +57,8 @@ from post a join
 from category c join users d
 on c.id = d.id) b
 on a.cateNo = b.cateNo
-where rownum = 1
-order by a.cateNo desc
-]]>
-</select>
-<select id="getPostList" resultType="com.javaex.vo.PostVo">
-<![CDATA[
-select rownum,postTitle,regDate
-from post
-where cateNo=#{cateNo}
+where a.postNo=#{postNo}
+order by a.postNo desc
 ]]>
 </select>
 </mapper>

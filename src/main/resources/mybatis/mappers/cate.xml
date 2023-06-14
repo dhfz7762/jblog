@@ -17,16 +17,31 @@ insert into category
 </insert>  
 <select id="getCateList" resultType="com.javaex.vo.CateVo">
 <![CDATA[
-select cateNo,
-       id,
-       cateName,
-       description,
-       regDate
-from category
+select * from
+category a left outer join (select b.cateno,count(a.postno) postCount 
+from post a right outer join (
+select * from category) b
+on a.cateno = b.cateno
+group by b.cateno
+order by b.cateNo desc) b
+on a.cateNo = b.cateNo
 where id = #{id}
-order by cateNo desc
 ]]>
 </select>
+<select id="cateList" resultType="com.javaex.vo.CateVo">
+<![CDATA[
+select * from
+category a left outer join (select b.cateno,count(a.postno) postCount 
+from post a right outer join (
+select * from category) b
+on a.cateno = b.cateno
+group by b.cateno
+order by b.cateNo desc) b
+on a.cateNo = b.cateNo
+where id = #{id}
+]]>
+</select>
+
 <select id="getCate" resultType="com.javaex.vo.CateVo">
 <![CDATA[
 select cateNo,
@@ -48,6 +63,18 @@ order by cateNo desc)
 where id = #{id}
 and rownum=1
 
+]]>
+</select>
+<delete id="deleteCate" parameterType="com.javaex.vo.CateVo">
+<![CDATA[
+delete from category
+where cateNo=#{cateNo}
+]]>
+</delete>
+<select id="postList" resultType="com.javaex.vo.PostVo">
+<![CDATA[
+select * from post
+where cateNo=#{cateNo}
 ]]>
 </select>
 </mapper>

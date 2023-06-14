@@ -20,8 +20,11 @@ public class PostDao {
 	public PostVo getLastPost(String id) {
 		return sqlSession.selectOne("post.getLastPost", id);
 	}
-	public List<PostVo> getPostList(String cateNo){
+	public List<PostVo> getPostList(int cateNo){
 		return sqlSession.selectList("post.getPostList", cateNo);
+	}
+	public PostVo clickPost(PostVo postVo) {
+		return sqlSession.selectOne("post.clickPost", postVo);
 	}
 
 }

@@ -46,19 +46,19 @@
 						</tr>
 					</thead>
 					<tbody id="cateList">
-					<c:forEach items="${cateList}" var="CateVo">
-						<tr>
-							<td>${CateVo.cateNo }</td>
-							<td>${CateVo.cateName}</td>
-							<td>${CateVo.postCount}</td>
-							<td>${CateVo.description}</td>
-							<td class='text-center'><img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-						</tr>
-						
-					</c:forEach>	
+						<c:forEach items="${cateList}" var="CateVo">
+								<tr id="t-${CateVo.cateNo }">
+									<td>${CateVo.cateNo }</td>
+									<td>${CateVo.cateName}</td>
+									<td>${CateVo.postCount}</td>
+									<td>${CateVo.description}</td>
+									<td class='text-center'><img class="btnCateDel" data-del="${CateVo.cateNo}" data-cnt="${CateVo.postCount}"
+										src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+								</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-<!-- 리스트 영역 -->
+				<!-- 리스트 영역 -->
 				<table id="admin-cate-add">
 					<colgroup>
 						<col style="width: 100px;">
@@ -142,6 +142,40 @@ $.ajax({
 		$("#cateList").prepend(str);
 	}
 })
+
+$("#cateList").on("click",".btnCateDel",function(){
+	var cateNo = $(this).data("del");
+	var postCount = $(this).data("cnt");
+	console.log(cateNo);
+	console.log(postCount);
+	var categoryVo = {
+		cateNo : cateNo,
+		postCount : postCount
+	}
+	
+$.ajax({
+		
+		url : "${pageContext.request.contextPath}/admin/category/delete",		
+		type : "post",
+		data : categoryVo,
+		success : function(count){
+			if(count>0){
+				$("#t-"+categoryVo.cateNo).remove();
+				}
+			else{
+				alert("삭제 할 수 없습니다.");
+			}
+			
+			
+		},
+		error : function(XHR, status, error) { 
+			console.error(status + " : " + error);
+		}
+    });
+	
+	
+})
+
 
 
 </script>

@@ -21,8 +21,11 @@ public class PostService {
 	public PostVo getLastPost(String id) {
 		return postDao.getLastPost(id);
 	}
-	public List<PostVo> getPostList(String cateNo){
+	public List<PostVo> getPostList(int cateNo){
 		return postDao.getPostList(cateNo);
+	}
+	public PostVo clickPost(PostVo postVo) {
+		return postDao.clickPost(postVo);
 	}
 	
 
